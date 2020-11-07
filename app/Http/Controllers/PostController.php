@@ -45,7 +45,7 @@ class PostController extends Controller
         ]);
 
         Post::create($data);
-        return redirect('articulos');
+        return redirect('articulos')->with('successMessage', '¡Articulo creado satisfactoriamente!');;
     }
 
     /**
@@ -79,7 +79,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Post $post)
+    public function update(Post $articulo)
     {
         $data = request()->validate([
             'title' => 'required',
@@ -87,8 +87,8 @@ class PostController extends Controller
             'category_id' => 'required|int'
         ]);
 
-        $post->update($data);
-        return redirect('articulos/' . $post->id);
+        $articulo->update($data);
+        return redirect('articulos/' . $articulo->id)->with('successMessage', '¡Articulo actualizado satisfactoriamente!');
     }
 
     /**
@@ -97,9 +97,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Post $articulo)
     {
-        $post->delete();
-        return redirect('articulos/');
+        $articulo->delete();
+        return redirect('articulos/')->with('successMessage', '¡Articulo eliminado satisfactoriamente!');
     }
 }

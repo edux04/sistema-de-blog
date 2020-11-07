@@ -18,6 +18,11 @@
 </header>
 
 <body>
+
+
 <section class="container content">
 
+    @if (Session::has('successMessage'))
+    <div class="alert alert-success" role="alert">{{ Session::get('successMessage') }}</div>
+    @endif
 

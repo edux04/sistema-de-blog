@@ -1,10 +1,16 @@
 <div class="form-group">
     <label for="inputName">Titulo</label>
     <input type="text" class="form-control" name="title" placeholder="Encabezado del articulo" autocomplete="off" value="{{ old('title') ??  $post->title ?? ''}}">
+    @if ($errors->has('title'))
+    <p  class="alert alert-danger" role="alert">{{ $errors->first('title') }}</p>
+    @endif
 </div>
 <div class="form-group">
   <label for="body">Contenido</label>
   <textarea class="form-control" name="body"  rows="3">{{old('body') ?? $post->body ?? ''}}</textarea>
+  @if ($errors->has('body'))
+    <p class="alert alert-danger" role="alert" >{{ $errors->first('body') }}</p>
+  @endif
 </div>
 <div class="form-group">
   <label for="category_id"></label>
@@ -18,5 +24,9 @@
     <option>N/a</option>
     @endforelse
   </select>
+  @if ($errors->has('category_id'))
+  <p class="alert alert-danger" role="alert" >{{ $errors->first('category_id') }}</p>
+@endif
 </div>
 @csrf
+

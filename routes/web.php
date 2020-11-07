@@ -17,10 +17,11 @@ Route::get('/', function () {
     return view('portada');
 });
 
-Route::get('articulos', "App\Http\Controllers\PostController@index");
-Route::get('articulos/crear', "App\Http\Controllers\PostController@create");
-Route::post('articulos', "App\Http\Controllers\PostController@store");
-Route::get('articulos/{post}', "App\Http\Controllers\PostController@show");
-Route::get('articulos/{post}/editar', "App\Http\Controllers\PostController@edit");
-Route::patch('articulos/{post}', "App\Http\Controllers\PostController@update");
-Route::delete('articulos/{post}', "App\Http\Controllers\PostController@destroy");
+
+Route::get('/articulos/crear/', "App\Http\Controllers\PostController@create");
+Route::get('/articulos/{post}/editar', "App\Http\Controllers\PostController@edit");
+Route::resource(
+    'articulos',
+    'App\Http\Controllers\PostController',
+    ['except' => ['create', 'edit']]
+);
