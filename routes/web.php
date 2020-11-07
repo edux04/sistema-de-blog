@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('portada');
-});
-
+Route::get('/', "App\Http\Controllers\PostController@portada");
 
 Route::get('/articulos/crear/', "App\Http\Controllers\PostController@create");
 Route::get('/articulos/{articulo}/editar', "App\Http\Controllers\PostController@edit");

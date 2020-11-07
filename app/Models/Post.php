@@ -20,4 +20,11 @@ class Post extends Model
     {
         return url("/articulos/{$this->id}-" . Str::slug($this->title));
     }
+
+
+    /**
+     * The storage format of the model's date columns.
+     *
+     * @var string
+     */
 }

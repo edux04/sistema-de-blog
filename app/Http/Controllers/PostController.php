@@ -55,6 +55,11 @@ class PostController extends Controller
 
         return view('posts.show', compact('articulo'));
     }
+    public function portada(Post $articulo)
+    {
+        $articulos = Post::oldest()->get();
+        return view('portada', compact('articulos'));
+    }
 
     /**
      * Show the form for editing the specified resource.
