@@ -25,3 +25,14 @@ Route::resource(
     'App\Http\Controllers\PostController',
     ['except' => ['create', 'edit']]
 );
+
+Route::get('/categorias/crear/', "App\Http\Controllers\CategoryController@create");
+Route::get('/categorias/{category}/editar', "App\Http\Controllers\CategoryController@edit");
+Route::resource(
+    'categorias',
+    'App\Http\Controllers\CategoryController',
+    ['except' => ['create', 'edit']]
+);
+
+
+Route::get('/{category}', "App\Http\Controllers\CategoryController@list");
