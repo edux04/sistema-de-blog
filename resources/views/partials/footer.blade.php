@@ -1,5 +1,10 @@
 
-
+</section>
 </body>
-<footer>Comenzando el blog para diario libre</footer>
+<footer class="blog-footer">
+    <p>El diario de los Eduardos</p>
+    <p>
+      <a href="#">Eduardo</a>
+    </p>
+  </footer>
 </html>
