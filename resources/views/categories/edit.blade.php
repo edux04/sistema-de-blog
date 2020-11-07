@@ -6,7 +6,7 @@
 @section('content')
 <h1>Editar categoria</h1>
 
-<form action="/categorias/{{$category->id}}" method="post" >
+<form action="/categorias/{{$categoria->name}}" method="post" >
     @method('PATCH')
     @include('categories.form')
     <button class="btn btn-success" type="submit">Guardar</button>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Faker\Provider\ar_JO\Company;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -15,8 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('categories.index', compact('categories'));
+        $categorias = Category::all();
+        return view('categories.index', compact('categorias'));
     }
 
     /**
@@ -26,8 +25,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('categories.create', compact('categories'));
+
+        return view('categories.create');
     }
 
     /**
@@ -53,10 +52,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $categoria)
     {
-        $category = Category::find($id);
-        return view('categories.show', compact('category'));
+
+        return view('categories.show', compact('categoria'));
     }
 
     /**
@@ -65,10 +64,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Category $categoria)
     {
-
-        return view('categories.edit', compact('category'));
+        return view('categories.edit', compact('categoria'));
     }
 
     /**
@@ -78,15 +76,15 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Category $category)
+    public function update(Category $categoria)
     {
         $data = request()->validate([
             'name' => 'required',
 
         ]);
 
-        $category->update($data);
-        return redirect('categorias/' . $category->id)->with('successMessage', '¡Categoria actualizada satisfactoriamente!');
+        $categoria->update($data);
+        return redirect('categorias/' . $categoria->name)->with('successMessage', '¡Categoria actualizada satisfactoriamente!');
     }
 
     /**
@@ -101,8 +99,8 @@ class CategoryController extends Controller
         return redirect('categorias/')->with('successMessage', '¡Categoria eliminada satisfactoriamente!');
     }
 
-    public function list(Category $category)
+    public function list(Category $categoria)
     {
-        return view('categories.list', compact('category'));
+        return view('categories.category', compact('categoria'));
     }
 }

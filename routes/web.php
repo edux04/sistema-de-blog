@@ -19,20 +19,21 @@ Route::get('/', function () {
 
 
 Route::get('/articulos/crear/', "App\Http\Controllers\PostController@create");
-Route::get('/articulos/{post}/editar', "App\Http\Controllers\PostController@edit");
+Route::get('/articulos/{articulo}/editar', "App\Http\Controllers\PostController@edit");
 Route::resource(
     'articulos',
     'App\Http\Controllers\PostController',
     ['except' => ['create', 'edit']]
 );
 
-Route::get('/categorias/crear/', "App\Http\Controllers\CategoryController@create");
-Route::get('/categorias/{category}/editar', "App\Http\Controllers\CategoryController@edit");
+
 Route::resource(
     'categorias',
     'App\Http\Controllers\CategoryController',
     ['except' => ['create', 'edit']]
 );
+Route::get('/categorias/crear/', "App\Http\Controllers\CategoryController@create");
+Route::get('/categorias/{categoria}/editar', "App\Http\Controllers\CategoryController@edit");
 
-
-Route::get('/{category}', "App\Http\Controllers\CategoryController@list");
+Route::get('/{categoria}', "App\Http\Controllers\CategoryController@list");
+Route::get('/{categoria}/{articulo}-{slug}', "App\Http\Controllers\PostController@list");

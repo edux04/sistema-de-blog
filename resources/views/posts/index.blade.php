@@ -1,14 +1,35 @@
 @extends('partials.template')
 
-@section('title',"Listado de posts")
+@section('title', 'Listado de posts')
 
 
 @section('content')
-<h1>Articulos ({{count($posts)}})</h1>
-<ul>
-@forelse ($posts as $post)
-<li class='h3'> {{ $loop->index }} <a href="/articulos/{{$post->id}}">-{{$post->title}} <span class="text-danger">({{$post->category->name}})</span></a> <a class='btn btn-primary' href="/articulos/{{$post->id}}/editar">Editar</a></li>
-@empty
-</ul>
-@endforelse
+    <h1>Articulos ({{ count($articulos) }})</h1>
+
+
+
+    @forelse ($articulos as $articulo)
+        <li class="d-flex p-2 justify-content-around">
+
+
+            <a href="{{ $articulo->url() }}">{{ $articulo->title }}</a>
+
+
+
+            <span class="text-danger">Categoria ({{ $articulo->category->name }})</span>
+            <div class="d-flex">
+                <a class='btn btn-primary mr-5' href="{{ $articulo->url() }}/editar">Editar</a>
+                <form action="{{ $articulo->url() }}" method="POST">
+                    @method('DELETE')
+                    @csrf
+                    <button class='btn btn-danger'>Eliminar</button>
+                </form>
+            </div>
+        </li>
+    @empty
+
+    @endforelse
+
+
+
 @endsection

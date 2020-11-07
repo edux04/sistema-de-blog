@@ -15,8 +15,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-        return view('posts.index', compact('posts'));
+        $articulos = Post::all();
+        return view('posts.index', compact('articulos'));
     }
 
     /**
@@ -26,8 +26,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('posts.create', compact('categories'));
+        $categorias = Category::all();
+        return view('posts.create', compact('categorias'));
     }
 
     /**
@@ -54,10 +54,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $articulo)
     {
-        $post = Post::find($id);
-        return view('posts.show', compact('post'));
+
+        return view('posts.show', compact('articulo'));
     }
 
     /**
@@ -66,10 +66,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(Post $articulo)
     {
-        $categories = Category::all();
-        return view('posts.edit', compact('categories', 'post'));
+        $categorias = Category::all();
+        return view('posts.edit', compact('categorias', 'articulo'));
     }
 
     /**
@@ -88,7 +88,7 @@ class PostController extends Controller
         ]);
 
         $articulo->update($data);
-        return redirect('articulos/' . $articulo->id)->with('successMessage', '¡Articulo actualizado satisfactoriamente!');
+        return redirect($articulo->url())->with('successMessage', '¡Articulo actualizado satisfactoriamente!');
     }
 
     /**
@@ -101,5 +101,10 @@ class PostController extends Controller
     {
         $articulo->delete();
         return redirect('articulos/')->with('successMessage', '¡Articulo eliminado satisfactoriamente!');
+    }
+
+    public function list($category, Post $articulo)
+    {
+        return view('posts.post', compact('articulo'));
     }
 }

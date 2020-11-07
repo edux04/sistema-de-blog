@@ -4,11 +4,11 @@
 
 
 @section('content')
-<h1>Categorias ({{count($categories)}})</h1>
+<h1>Categorias ({{count($categorias)}})</h1>
 <ul>
-@forelse ($categories as $category)
-<li class='h3'> {{ $loop->index }} <a href="/categorias/{{$category->id}}">-{{$category->name}}</a> <a class='btn btn-primary'
-href="/categorias/{{$category->id}}/editar">Editar</a></li>
+@forelse ($categorias as $categoria)
+<li class='h3'> {{ $loop->index }} <a href="/categorias/{{$categoria->name}}">-{{$categoria->name}}</a> <a class='btn btn-primary'
+href="/categorias/{{$categoria->name}}/editar">Editar</a></li>
 @empty
 </ul>
 @endforelse
