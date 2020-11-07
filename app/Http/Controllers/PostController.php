@@ -38,13 +38,9 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $data = request()->validate([
-            'title' => 'required',
-            'body' => 'required|max:10000',
-            'category_id' => 'required|int'
-        ]);
 
-        Post::create($data);
+        $articulo = Post::create($this->validateRequest());
+        $this->storeImage($articulo);
         return redirect('articulos')->with('successMessage', '¡Articulo creado satisfactoriamente!');;
     }
 
@@ -81,13 +77,9 @@ class PostController extends Controller
      */
     public function update(Post $articulo)
     {
-        $data = request()->validate([
-            'title' => 'required',
-            'body' => 'required|max:10000',
-            'category_id' => 'required|int'
-        ]);
 
-        $articulo->update($data);
+        $articulo->update($this->validateRequest());
+        $this->storeImage($articulo);
         return redirect($articulo->url())->with('successMessage', '¡Articulo actualizado satisfactoriamente!');
     }
 
@@ -106,5 +98,33 @@ class PostController extends Controller
     public function list($category, Post $articulo)
     {
         return view('posts.post', compact('articulo'));
+    }
+
+    private function validateRequest()
+    {
+
+
+        return tap(request()->validate([
+            'title' => 'required',
+            'body' => 'required|max:10000',
+            'category_id' => 'required|int',
+        ]), function () {
+            if (request()->hasFile('image')) {
+
+                request()->validate([
+
+                    'image' => 'file|image|max:10000'
+                ]);
+            }
+        });
+    }
+
+    private function storeImage($articulo)
+    {
+        if (request()->has('image')) {
+            $articulo->update([
+                'image' => request()->image->store('images/posts', 'public')
+            ]);
+        }
     }
 }

@@ -30,4 +30,13 @@
         <p class="alert alert-danger" role="alert">{{ $errors->first('category_id') }}</p>
     @endif
 </div>
+
+<div class="form-group">
+    <label for="image">Imagen del articulo</label>
+    <input type="file" name="image" class="form-control">
+    <small id="helpId" class="text-muted">Opcional</small>
+    @if ($errors->has('category_id'))
+        <p class="alert alert-danger" role="alert">{{ $errors->first('category_id') }}</p>
+    @endif
+</div>
 @csrf

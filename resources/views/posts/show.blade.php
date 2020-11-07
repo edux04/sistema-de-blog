@@ -4,8 +4,12 @@
 
 
 @section('content')
-    <h1>{{ $articulo->title }} <a class='btn btn-primary' href="{{ $articulo->url() }}/editar">Editar</a>
-    </h1>
+    <h1>{{ $articulo->title }} </h1>
+    @if ($articulo->image)
+        <img src="{{ asset('storage/' . $articulo->image) }}" alt="titulo de la imagen" class="img-fluid">
+    @endif
+    <a class='btn btn-primary' href="{{ $articulo->url() }}/editar">Editar</a>
+
     <form action="{{ $articulo->url() }}" method="POST">
         @method('DELETE')
         @csrf

@@ -1,16 +1,16 @@
 @extends('partials.template')
 
-@section('title',"Editar categoria")
+@section('title', 'Editar categoria')
 
 
 @section('content')
-<h1>Editar categoria</h1>
+    <h1>Editar categoria</h1>
 
-<form action="/categorias/{{$categoria->name}}" method="post" >
-    @method('PATCH')
-    @include('categories.form')
-    <button class="btn btn-success" type="submit">Guardar</button>
-</form>
+    <form action="/categorias/{{ $categoria->name }}" method="post">
+        @method('PATCH')
+        @include('categories.form')
+        <button class="btn btn-success" type="submit">Guardar</button>
+    </form>
 
 
 @endsection
