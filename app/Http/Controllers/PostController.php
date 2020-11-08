@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\CUPostRequest;
+use Intervention\Image\Facades\Image;
 
 class PostController extends Controller
 {
@@ -62,8 +63,9 @@ class PostController extends Controller
     {
 
         //$articulos = Post::oldest()->get();
+        $categorias = Category::all();
         $articulos = Post::where('posted_at', '<=', date('Y-m-d H:i:s'))->get();
-        return view('portada', compact('articulos'));
+        return view('portada', compact('categorias', 'articulos'));
     }
 
     /**
@@ -102,6 +104,8 @@ class PostController extends Controller
     public function destroy(Post $articulo)
     {
         $articulo->delete();
+        unlink(public_path('storage/' . $articulo->image));
+
         return redirect('articulos/')->with('successMessage', '¡Articulo eliminado satisfactoriamente!');
     }
 
@@ -117,6 +121,8 @@ class PostController extends Controller
             $articulo->update([
                 'image' => request()->image->store('images/posts', 'public')
             ]);
+            $image = Image::make(public_path('storage/' . $articulo->image))->fit(220, 120);
+            $image->save();
         }
     }
 }

@@ -20,6 +20,10 @@ class Post extends Model
     {
         return url("/articulos/{$this->id}-" . Str::slug($this->title));
     }
+    public function publicUrl()
+    {
+        return url("/{$this->category->name}/{$this->id}-" . Str::slug($this->title));
+    }
 
 
     /**

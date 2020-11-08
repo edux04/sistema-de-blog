@@ -5,19 +5,26 @@
 
 
 @section('content')
+<div class="nav-scroller py-1 mb-2">
+    <nav class="nav d-flex justify-content-between">
+       @foreach ($categorias as $categoria)
+       <a class="p-2 text-muted" href="/{{$categoria->name}}">{{$categoria->name}}</a>
+       @endforeach
 
+
+
+    </nav>
+  </div>
     <section class="row bg-primary p-5">
 
         @forelse ($articulos as $articulo)
 
 
-            <a href='{{ $articulo->url() }}' class="front-card  mx-2">
+            <a href='{{ $articulo->publicUrl() }}' class="front-card col-sm mx-2">
 
                 @if ($articulo->image)
-                    <div class="card-image" style="background-image:url({{ asset('storage/' . $articulo->image) }});">
 
-                    </div>
-
+                <img src="{{ asset('storage/' . $articulo->image) }}" alt="titulo de la imagen">
                 @endif
                 <div class="card-body">
                     <h5 class="card-title">{{ $articulo->title }} </h5>
