@@ -15,3 +15,29 @@ body{
 .content{
     padding: 20px;
 }
+
+
+a:hover{
+    text-decoration:none;
+}
+
+
+.front-card{
+    height: 400px;
+    background-color: #fff;
+}
+.card-title{
+    color:#000;
+}
+.card-image{
+background-position:center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 200px;
+    width: 200px;
+}
+
+.front-card img{
+    height: 300px;
+    width: 100%;
+}

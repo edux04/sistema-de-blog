@@ -5,31 +5,33 @@
 
 
 @section('content')
-    <h1>Articulos ({{ count($articulos) }})</h1>
+
+    <section class="row bg-primary p-5">
+
+        @forelse ($articulos as $articulo)
+
+
+            <a href='{{ $articulo->url() }}' class="front-card  mx-2">
+
+                @if ($articulo->image)
+                    <div class="card-image" style="background-image:url({{ asset('storage/' . $articulo->image) }});">
+
+                    </div>
+
+                @endif
+                <div class="card-body">
+                    <h5 class="card-title">{{ $articulo->title }} </h5>
+                    <p class="text-muted">{{ $articulo->category->name }}.</p>
+
+                </div>
+            </a>
 
 
 
-    @forelse ($articulos as $articulo)
-        <li class="d-flex p-2 justify-content-around">
+        @empty
 
-            Fecha {{ $articulo->posted_at }}
-            <a href="{{ $articulo->url() }}">{{ $articulo->title }}</a>
-
-
-
-            <span class="text-danger">Categoria ({{ $articulo->category->name }})</span>
-            <div class="d-flex">
-                <a class='btn btn-primary mr-5' href="{{ $articulo->url() }}/editar">Editar</a>
-                <form action="{{ $articulo->url() }}" method="POST">
-                    @method('DELETE')
-                    @csrf
-                    <button class='btn btn-danger'>Eliminar</button>
-                </form>
-            </div>
-        </li>
-    @empty
-
-    @endforelse
+        @endforelse
+    </section>
 
 
 

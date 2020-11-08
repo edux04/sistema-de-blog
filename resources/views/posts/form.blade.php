@@ -33,7 +33,8 @@
 
 <div class="form-group">
     <label for="date">Fecha de publicación</label>
-    <input type="date" name="date" class="form-control" onchange="updateDate(this)" id="date">
+    <input type="date" name="date" class="form-control" onchange="updateDate(this)" id="date"
+        value="{{ old('date') ?? (explode(' ', $articulo->posted_at)[0] ?? '') }}">
     <small id="helpId" class="text-muted">Programa la fecha en la que se publicara el articulo</small>
 
 
@@ -41,7 +42,8 @@
 </div>
 <div class="form-group">
     <label for="hour">Hora de publicación</label>
-    <input type="time" name="hour" class="form-control" onchange="updateDate(this)" id="hour">
+    <input type="time" name="hour" class="form-control" onchange="updateDate(this)" id="hour"
+        value="{{ old('hour') ?? (explode(' ', $articulo->posted_at)[1] ?? '') }}">
     <small id="helpId" class="text-muted">Programa la hora en la que se publicara el articulo</small>
 
 </div>
@@ -51,7 +53,8 @@
 @endif
 <div class="form-group d-none">
 
-    <input type="text" class="form-control" name="posted_at" id="posted_at">
+    <input type="text" class="form-control" name="posted_at" id="posted_at"
+        value="{{ old('posted_at') ?? ($articulo->posted_at ?? '') }}">
 </div>
 
 <div class="form-group">
