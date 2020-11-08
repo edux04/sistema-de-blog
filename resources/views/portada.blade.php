@@ -12,7 +12,7 @@
     @forelse ($articulos as $articulo)
         <li class="d-flex p-2 justify-content-around">
 
-
+            Fecha {{ $articulo->posted_at }}
             <a href="{{ $articulo->url() }}">{{ $articulo->title }}</a>
 
 

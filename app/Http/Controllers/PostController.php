@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use DateTime;
+use Carbon\Carbon;
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CUPostRequest;
 
 class PostController extends Controller
 {
@@ -36,10 +39,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(CUPostRequest $request)
+    {   // Retrieve the validated input data...
 
-        $articulo = Post::create($this->validateRequest());
+        $articulo = Post::create($request->validated());
         $this->storeImage($articulo);
         return redirect('articulos')->with('successMessage', '¡Articulo creado satisfactoriamente!');;
     }
@@ -57,7 +60,9 @@ class PostController extends Controller
     }
     public function portada(Post $articulo)
     {
-        $articulos = Post::oldest()->get();
+
+        //$articulos = Post::oldest()->get();
+        $articulos = Post::where('posted_at', '<=', date('Y-m-d H:i:s'))->get();
         return view('portada', compact('articulos'));
     }
 
@@ -80,10 +85,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Post $articulo)
+    public function update(CUPostRequest $request, Post $articulo)
     {
 
-        $articulo->update($this->validateRequest());
+        $articulo->update($request->validated());
         $this->storeImage($articulo);
         return redirect($articulo->url())->with('successMessage', '¡Articulo actualizado satisfactoriamente!');
     }
@@ -105,24 +110,6 @@ class PostController extends Controller
         return view('posts.post', compact('articulo'));
     }
 
-    private function validateRequest()
-    {
-
-
-        return tap(request()->validate([
-            'title' => 'required',
-            'body' => 'required|max:10000',
-            'category_id' => 'required|int',
-        ]), function () {
-            if (request()->hasFile('image')) {
-
-                request()->validate([
-
-                    'image' => 'file|image|max:10000'
-                ]);
-            }
-        });
-    }
 
     private function storeImage($articulo)
     {

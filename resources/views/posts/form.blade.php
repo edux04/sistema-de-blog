@@ -32,20 +32,26 @@
 </div>
 
 <div class="form-group">
-    <label for="posted_at">Fecha de publicación</label>
-    <input type="date" name="posted_at" class="form-control">
+    <label for="date">Fecha de publicación</label>
+    <input type="date" name="date" class="form-control" onchange="updateDate(this)" id="date">
     <small id="helpId" class="text-muted">Programa la fecha en la que se publicara el articulo</small>
-    @if ($errors->has('posted_at'))
-        <p class="alert alert-danger" role="alert">{{ $errors->first('category_id') }}</p>
-    @endif
+
+
+
 </div>
 <div class="form-group">
-    <label for="posted_at">Hora de publicación</label>
-    <input type="time" name="posted_at_hour" class="form-control">
+    <label for="hour">Hora de publicación</label>
+    <input type="time" name="hour" class="form-control" onchange="updateDate(this)" id="hour">
     <small id="helpId" class="text-muted">Programa la hora en la que se publicara el articulo</small>
-    @if ($errors->has('posted_at_hour'))
-        <p class="alert alert-danger" role="alert">{{ $errors->first('category_id') }}</p>
-    @endif
+
+</div>
+
+@if ($errors->has('posted_at'))
+    <p class="alert alert-danger" role="alert">{{ $errors->first('posted_at') }}</p>
+@endif
+<div class="form-group d-none">
+
+    <input type="text" class="form-control" name="posted_at" id="posted_at">
 </div>
 
 <div class="form-group">
@@ -53,7 +59,7 @@
     <input type="file" name="image" class="form-control">
     <small id="helpId" class="text-muted">Opcional</small>
     @if ($errors->has('image'))
-        <p class="alert alert-danger" role="alert">{{ $errors->first('category_id') }}</p>
+        <p class="alert alert-danger" role="alert">{{ $errors->first('image') }}</p>
     @endif
 </div>
 
