@@ -1,12 +1,12 @@
 @extends('partials.template')
 
-@section('title', 'Portada')
+@section('title', 'Diario Siempre')
 
 
 
 @section('content')
 
-    <div class="nav-scroller py-1 mb-2 bg-white">
+    <div class="nav-scroller p-3 mb-2 bg-white ">
         <nav class="nav d-flex justify-content-between">
             @forelse ($categorias as $categoria)
                 <a class="p-2 category-link" href="/{{ $categoria->name }}">{{ ucfirst($categoria->name) }}</a>
@@ -61,8 +61,6 @@
 
 
 
-    <div class="d-flex justify-content-center">
-        {{ $articulos->links('pagination::bootstrap-4') }}
-    </div>
+    @include('partials.pagination')
 
 @endsection

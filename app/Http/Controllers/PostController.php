@@ -20,7 +20,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $articulos = Post::all();
+        $articulos = Post::paginate(5);
         return view('posts.index', compact('articulos'));
     }
 
@@ -65,7 +65,7 @@ class PostController extends Controller
 
         //$articulos = Post::oldest()->get();
         $categorias = Category::all();
-        $articulos = Post::where('posted_at', '<=', date('Y-m-d H:i:s'))->paginate(10);
+        $articulos = Post::where('posted_at', '<=', date('Y-m-d H:i:s'))->paginate(5);
         return view('portada', compact('categorias', 'articulos'));
     }
 
@@ -127,14 +127,17 @@ class PostController extends Controller
 
     public function search(Request $request)
     {
-        //$articulos = Post::where('posted_at', '<=', date('Y-m-d H:i:s'))->get();
-        $search = $request['search'];
-        $articulos = Post::where('title', 'LIKE',    '%' . $search . '%')
-            ->orWhere('body', 'LIKE', '%' . $search . '%')
-            ->get();
-        //filtro para solo mostrar los publicados
-        $articulos = $articulos->where('posted_at', '<=', date('Y-m-d H:i:s'));
-        return view('posts.search', compact('search', 'articulos'));
+
+        $search =  $request['search'];
+        if ($search != "") {
+            $articulos = Post::where(function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('body', 'like', '%' . $search . '%');
+            })->where('posted_at', '<=', date('Y-m-d H:i:s'))->paginate(5);
+        } else {
+            $articulos = Post::where('posted_at', '<=', date('Y-m-d H:i:s'))->paginate(5);
+        }
+        return View('posts.search', compact('articulos', 'search'));
     }
 
 

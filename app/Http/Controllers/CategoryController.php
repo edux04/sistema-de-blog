@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categorias = Category::all();
+        $categorias = Category::paginate(5);
         return view('categories.index', compact('categorias'));
     }
 
@@ -95,8 +95,8 @@ class CategoryController extends Controller
 
     public function list(Category $categoria)
     {   //return only posted articles
-        $articulos = $categoria->posts->where('posted_at', '<=', date('Y-m-d H:i:s'));
-        //$articulos = $categoria->posts;
+
+        $articulos = $categoria->posts()->where('posted_at', '<=', date('Y-m-d H:i:s'))->paginate(5);
         return view('categories.category', compact('articulos', 'categoria'));
     }
 }

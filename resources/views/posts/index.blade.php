@@ -27,9 +27,9 @@
             </div>
         </li>
     @empty
-
+        <p>No hay articulos</p>
     @endforelse
 
 
-
+    @include('partials.pagination')
 @endsection

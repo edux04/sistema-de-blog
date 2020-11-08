@@ -49,11 +49,14 @@ body{
     }
 
 
-
+.categories{
+    padding:10px
+}
 .category-link{
     color:#007651;
     font-size: 18px;
     font-weight: 800;
+    border: 1.5px solid #45e2b0;
 }
 
 

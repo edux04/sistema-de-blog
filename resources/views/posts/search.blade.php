@@ -53,5 +53,5 @@
         </div>
 
     </div>
-
+    @include('partials.pagination')
 @endsection
