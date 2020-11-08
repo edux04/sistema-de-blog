@@ -6,6 +6,7 @@ use DateTime;
 use Carbon\Carbon;
 use App\Models\Post;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\CUPostRequest;
 use Intervention\Image\Facades\Image;
@@ -45,7 +46,7 @@ class PostController extends Controller
 
         $articulo = Post::create($request->validated());
         $this->storeImage($articulo);
-        return redirect('articulos')->with('successMessage', '¡Articulo creado satisfactoriamente!');;
+        return redirect('articulos')->with('successMessage', '¡Articulo creado satisfactoriamente!');
     }
 
     /**
@@ -64,7 +65,7 @@ class PostController extends Controller
 
         //$articulos = Post::oldest()->get();
         $categorias = Category::all();
-        $articulos = Post::where('posted_at', '<=', date('Y-m-d H:i:s'))->get();
+        $articulos = Post::where('posted_at', '<=', date('Y-m-d H:i:s'))->paginate(10);
         return view('portada', compact('categorias', 'articulos'));
     }
 
@@ -109,9 +110,31 @@ class PostController extends Controller
         return redirect('articulos/')->with('successMessage', '¡Articulo eliminado satisfactoriamente!');
     }
 
-    public function list($category, Post $articulo)
+    public function list($categoria, Post $articulo)
     {
-        return view('posts.post', compact('articulo'));
+        if (Str::lower($categoria) != Str::lower($articulo->category->name)) {
+            return redirect($articulo->publicUrl());
+        }
+        if ($articulo->posted_at > date('Y-m-d H:i:s')) {
+            abort(404);
+        }
+
+        $latestsArticles = Post::latest()->get();
+        $lastestCategories = Category::latest()->get();
+        return view('posts.post', compact('lastestCategories', 'latestsArticles', 'articulo'));
+    }
+
+
+    public function search(Request $request)
+    {
+        //$articulos = Post::where('posted_at', '<=', date('Y-m-d H:i:s'))->get();
+        $search = $request['search'];
+        $articulos = Post::where('title', 'LIKE',    '%' . $search . '%')
+            ->orWhere('body', 'LIKE', '%' . $search . '%')
+            ->get();
+        //filtro para solo mostrar los publicados
+        $articulos = $articulos->where('posted_at', '<=', date('Y-m-d H:i:s'));
+        return view('posts.search', compact('search', 'articulos'));
     }
 
 
@@ -121,7 +144,7 @@ class PostController extends Controller
             $articulo->update([
                 'image' => request()->image->store('images/posts', 'public')
             ]);
-            $image = Image::make(public_path('storage/' . $articulo->image))->fit(220, 120);
+            $image = Image::make(public_path('storage/' . $articulo->image))->fit(600, 400);
             $image->save();
         }
     }

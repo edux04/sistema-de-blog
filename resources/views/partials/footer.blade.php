@@ -2,11 +2,15 @@
 </body>
 
 @yield('scripts')
-<footer class="blog-footer">
-    <p>El diario de los Eduardos</p>
-    <p>
-        <a href="#">Eduardo</a>
-    </p>
-</footer>
+<div class="container">
+    <footer class="blog-footer">
+        <p>Tu Diario de siempre</p>
+        <p>
+            <img src="{{ URL::to('/') }}/images/diariopng.png" alt="logo" class="logo">
+            Diario Siempre
+        </p>
+    </footer>
+</div>
+
 
 </html>

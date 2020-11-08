@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use DateTime;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CUPostRequest extends FormRequest
@@ -25,7 +26,7 @@ class CUPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
+            'title' => 'required|max:255',
             'body' => 'required|max:10000',
             'category_id' => 'required|int',
             'posted_at' => 'required|date_format:Y-m-d H:i:s',
@@ -38,6 +39,7 @@ class CUPostRequest extends FormRequest
     {
         $this->merge([
             'posted_at' => Carbon::parse($this->posted_at)->format('Y-m-d H:i:s'),
+            'title' => Str::ucfirst($this->title)
         ]);
     }
 }

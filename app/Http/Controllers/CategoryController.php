@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -35,14 +37,10 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $data = request()->validate([
-            'name' => 'required'
 
-        ]);
-
-        Category::create($data);
+        Category::create($request->validated());
         return redirect('categorias')->with('successMessage', '¡Categoria creada satisfactoriamente!');;
     }
 
@@ -76,14 +74,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Category $categoria)
+    public function update(CategoryRequest $request, Category $categoria)
     {
-        $data = request()->validate([
-            'name' => 'required',
 
-        ]);
-
-        $categoria->update($data);
+        $categoria->update($request->validated());
         return redirect('categorias/' . $categoria->name)->with('successMessage', '¡Categoria actualizada satisfactoriamente!');
     }
 
@@ -100,7 +94,9 @@ class CategoryController extends Controller
     }
 
     public function list(Category $categoria)
-    {
-        return view('categories.category', compact('categoria'));
+    {   //return only posted articles
+        $articulos = $categoria->posts->where('posted_at', '<=', date('Y-m-d H:i:s'));
+        //$articulos = $categoria->posts;
+        return view('categories.category', compact('articulos', 'categoria'));
     }
 }
