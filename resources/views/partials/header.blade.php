@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="shortcut icon" ”" type=”image/png” href="{{ URL::to('/') }}/images/diariopng.png" />
+    <link rel="shortcut icon" type="image/png" href="{{ URL::to('/') }}/images/logo.png" />
     <title>@yield('title')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
 

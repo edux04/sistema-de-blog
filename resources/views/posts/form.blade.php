@@ -34,7 +34,11 @@
 <div class="form-group">
     <label for="date">Fecha de publicación</label>
     <input type="date" name="date" class="form-control" onchange="updateDate(this)" id="date"
-        value="{{ old('date') ?? (explode(' ', $articulo->posted_at)[0] ?? '') }}">
+    @if (isset($articulo->posted_at))
+    value="{{ old('date') ?? (explode(' ', $articulo->posted_at)[0] ?? '') }}"
+    @else
+    value="{{ old('date') ?? "" }}"
+    @endif>
     <small id="helpId" class="text-muted">Programa la fecha en la que se publicara el articulo</small>
 
 
@@ -43,7 +47,15 @@
 <div class="form-group">
     <label for="hour">Hora de publicación</label>
     <input type="time" name="hour" class="form-control" onchange="updateDate(this)" id="hour"
-        value="{{ old('hour') ?? (explode(' ', $articulo->posted_at)[1] ?? '') }}">
+
+
+
+    @if (isset($articulo->posted_at))
+    value="{{ old('hour') ?? (explode(' ', $articulo->posted_at)[1] ?? '') }}"
+    @else
+    value="{{ old('hour') ?? "" }}"
+    @endif
+    >
     <small id="helpId" class="text-muted">Programa la hora en la que se publicara el articulo</small>
 
 </div>
@@ -65,5 +77,11 @@
         <p class="alert alert-danger" role="alert">{{ $errors->first('image') }}</p>
     @endif
 </div>
+
+@if (isset($articulo->image))
+    <img src="{{ asset('storage/' . $articulo->image) }}" alt=" {{ $articulo->title }}" class="fluid-img">
+    <br>
+    <br>
+@endif
 
 @csrf

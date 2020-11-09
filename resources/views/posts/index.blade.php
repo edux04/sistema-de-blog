@@ -4,32 +4,33 @@
 
 
 @section('content')
-    <h1>Articulos ({{ count($articulos) }})</h1>
+    <div class="front-page gray-bg">
+        <h1>Articulos ({{ count($articulos) }})</h1>
 
 
 
-    @forelse ($articulos as $articulo)
-        <li class="d-flex p-2 justify-content-around">
+        @forelse ($articulos as $articulo)
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{{ $articulo->url() }}">{{ $articulo->title }}</a>
+                    <div class="d-flex">
+                        <a class='btn btn-primary mr-5' href="{{ $articulo->url() }}/editar">Editar</a>
+                        <form action="{{ $articulo->url() }}" method="POST">
+                            @method('DELETE')
+                            @csrf
+                            <button class='btn btn-danger'>Eliminar</button>
+                        </form>
+                    </div>
+
+                </li>
+
+            </ul>
+        @empty
+            <p>No hay articulos</p>
+        @endforelse
 
 
-            <a href="{{ $articulo->url() }}">{{ $articulo->title }}</a>
-
-
-
-            <span class="text-danger">Categoria ({{ $articulo->category->name }})</span>
-            <div class="d-flex">
-                <a class='btn btn-primary mr-5' href="{{ $articulo->url() }}/editar">Editar</a>
-                <form action="{{ $articulo->url() }}" method="POST">
-                    @method('DELETE')
-                    @csrf
-                    <button class='btn btn-danger'>Eliminar</button>
-                </form>
-            </div>
-        </li>
-    @empty
-        <p>No hay articulos</p>
-    @endforelse
-
+    </div>
 
     @include('partials.pagination')
 @endsection

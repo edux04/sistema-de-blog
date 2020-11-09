@@ -21,7 +21,21 @@ class PostController extends Controller
     public function index()
     {
         $articulos = Post::paginate(5);
+
         return view('posts.index', compact('articulos'));
+    }
+
+    public function api()
+    {
+
+
+        return view('testing');
+    }
+    public function testApi()
+    {
+
+
+        return view('testing-api');
     }
 
     /**
@@ -57,8 +71,9 @@ class PostController extends Controller
      */
     public function show(Post $articulo)
     {
-
-        return view('posts.show', compact('articulo'));
+        $latestsArticles = Post::latest()->get();
+        $lastestCategories = Category::latest()->get();
+        return view('posts.show', compact('lastestCategories', 'latestsArticles', 'articulo'));
     }
     public function portada(Post $articulo)
     {

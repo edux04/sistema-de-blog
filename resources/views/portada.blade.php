@@ -1,6 +1,6 @@
 @extends('partials.template')
 
-@section('title', 'Diario Siempre')
+@section('title', 'Diario Libre')
 
 
 
@@ -24,31 +24,34 @@
         </div>
         <!-- Blog articles Column -->
         <div class="col-md-8  ">
+            @forelse ($articulos as $articulo)
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="big-article">
+                    <a href="{{ $articulo->publicUrl() }}">
 
-            @foreach ($articulos as $articulo)
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="big-article">
-                        <a href="{{ $articulo->publicUrl() }}">
-
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="image">
-                                        @if ($articulo->image)
-                                            <img src="{{ asset('storage/' . $articulo->image) }}" alt="titulo de la imagen">
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="blog-details">
-                                        <h2 class="big-article-title">{{ $articulo->title }}</h2>
-
-                                    </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="image">
+                                    @if ($articulo->image)
+                                        <img src="{{ asset('storage/' . $articulo->image) }}" alt="titulo de la imagen">
+                                    @endif
                                 </div>
                             </div>
-                        </a>
-                    </div>
+                            <div class="col-sm-12">
+                                <div class="blog-details">
+                                    <h2 class="big-article-title">{{ $articulo->title }}</h2>
+
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            @endforeach
+            </div>
+            @empty
+                <p>No hay articulos disponibles</p>
+            @endforelse
+
+
         </div>
 
 

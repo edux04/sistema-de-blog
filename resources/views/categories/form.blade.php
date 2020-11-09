@@ -6,6 +6,5 @@
     @endif
 </div>
 
-</div>
 @csrf
 

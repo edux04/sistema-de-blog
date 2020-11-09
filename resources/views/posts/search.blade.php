@@ -12,7 +12,7 @@
 
     <div class="row front-page gray-bg">
         <div class=" col-12">
-            <h3 class="big-article-title">Resultado{{ count($articulos) > 1 ? 's' : '' }} de la busqueda</h3>
+            <h3 class="big-article-title green">Resultado{{ count($articulos) > 1 ? 's' : '' }} de la busqueda</h3>
         </div>
         <!-- Blog articles Column -->
         <div class="col-md-8  ">
