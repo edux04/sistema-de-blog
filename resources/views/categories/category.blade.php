@@ -16,7 +16,7 @@
         </div>
         <!-- Blog articles Column -->
         <div class="col-md-8  ">
-            @forelse ($articulos as $articulos)
+            @forelse ($articulos as $articulo)
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="big-article">
                     <a href="{{ $articulo->publicUrl() }}">
